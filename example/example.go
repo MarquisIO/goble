@@ -3,13 +3,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/MarinX/goble"
+
+	goble "github.com/MarquisIO/goble"
 )
 
 func main() {
 
 	//Locate your dev, on Windows is COM4 or equivalent
-	hm, err := goble.New("/dev/ttyUSB2")
+	hm, err := goble.New("/dev/tty.usbserial")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -36,7 +37,7 @@ func main() {
 	//Set device name
 	fmt.Println(
 		"Setting device name...",
-		hm.SetDeviceName("HelloWorld").Result,
+		hm.SetDeviceName("Marquis").Result,
 	)
 
 	//Needs to reset to changes take effect

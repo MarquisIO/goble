@@ -1,11 +1,11 @@
-// ble
 package goble
 
 import (
 	"fmt"
-	"github.com/MarinX/serial"
 	"strings"
 	"time"
+
+	"github.com/MarinX/serial"
 )
 
 func New(dev string) (*Ble, error) {
@@ -121,35 +121,6 @@ func (t *Ble) FactoryReset() *BleResponse {
 }
 
 func (t *Ble) write_read(cmd string) *BleResponse {
-
-	if _, err := t.fd.Write([]byte(cmd)); err != nil {
-		return &BleResponse{
-			Error: err,
-		}
-	}
-
-	buff := make([]byte, 512)
-
-	if _, err := t.fd.Read(buff); err != nil {
-		return &BleResponse{
-			Error: err,
-		}
-	}
-
-	sep := strings.Split(string(buff), ":")
-	if len(sep) == 2 {
-		return &BleResponse{
-			Result: string(buff),
-			Param:  sep[1],
-		}
-	}
-	return &BleResponse{
-		Result: string(buff),
-	}
-
-}
-
-func (t *Ble) Write_Read(cmd string) *BleResponse {
 
 	if _, err := t.fd.Write([]byte(cmd)); err != nil {
 		return &BleResponse{
