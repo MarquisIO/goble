@@ -66,7 +66,7 @@ const (
 
 	// Parity bit: Missing Now
 	// AT+PARI?
-	// AT+PARI%d --> need const
+	// AT+PARI%d --> need const param
 
 	// PIO1 output status (System Led)
 	getStatus = "AT+PIO1?"
@@ -84,14 +84,11 @@ const (
 	factoryReset = "AT+RENEW"
 
 	// Restart device
-	reset = "AT+RESET"
+	restart = "AT+RESET"
 
 	// Device Role
 	setRole = "AT+ROLE%d"
 	getRole = "AT+ROLE?"
-
-	// Device RSSI
-	rssi = "AT+RSSI?"
 
 	// Last connected device address
 	lastDeviceAddress = "AT+RADD?"
@@ -101,11 +98,11 @@ const (
 	setBondMode = "AT+TYPE%d"
 
 	// Device UUID
-	setDeviceUUID = "AT+UUID?"
-	getDeviceUUID = "AT+UUID%s"
+	getDeviceUUID = "AT+UUID?"
+	setDeviceUUID = "AT+UUID%s"
 
 	// Firmware version
-	softwareVersion = "AT+VERS?"
+	getSoftwareVersion = "AT+VERS?"
 )
 
 // BleAdvertisingInt type
