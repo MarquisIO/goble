@@ -128,6 +128,16 @@ func (t *Ble) SetMinor(minor int64) *BleResponse {
 	return t.writeRead(fmt.Sprintf(setMinor, t.hexTrick(minor)))
 }
 
+// GetMode func
+func (t *Ble) GetMode() *BleResponse {
+	return t.writeRead(getMode)
+}
+
+// SetMode func
+func (t *Ble) SetMode(m BleMode) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setMode, int(m)))
+}
+
 // GetDeviceName func
 func (t *Ble) GetDeviceName() *BleResponse {
 	return t.writeRead(getDeviceName)
@@ -138,44 +148,14 @@ func (t *Ble) SetDeviceName(name string) *BleResponse {
 	return t.writeRead(fmt.Sprintf(setDeviceName, name))
 }
 
-// SetMode func
-func (t *Ble) SetMode(m BleMode) *BleResponse {
-	return t.writeRead(fmt.Sprintf(setMode, int(m)))
+// GetPIO1Status func
+func (t *Ble) GetPIO1Status() *BleResponse {
+	return t.writeRead(getStatus)
 }
 
-// GetMode func
-func (t *Ble) GetMode() *BleResponse {
-	return t.writeRead(getMode)
-}
-
-// GetPin func
-func (t *Ble) GetPin() *BleResponse {
-	return t.writeRead(getPin)
-}
-
-// SetPin func
-func (t *Ble) SetPin(pin int) *BleResponse {
-	return t.writeRead(fmt.Sprintf(setPin, pin))
-}
-
-// GetBoundMode func
-func (t *Ble) GetBoundMode() *BleResponse {
-	return t.writeRead(getBondMode)
-}
-
-// SetBoundMode func
-func (t *Ble) SetBoundMode(mode BleBondMode) *BleResponse {
-	return t.writeRead(fmt.Sprintf(setBondMode, int(mode)))
-}
-
-// GetLastConnectedDeviceAddress func
-func (t *Ble) GetLastConnectedDeviceAddress() *BleResponse {
-	return t.writeRead(lastDeviceAddress)
-}
-
-// GetRSSI func
-func (t *Ble) GetRSSI() *BleResponse {
-	return t.writeRead(rssi)
+// SetPIO1Status func
+func (t *Ble) SetPIO1Status(s BlePIO) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setStatus, s))
 }
 
 // GetPIO func
@@ -188,6 +168,26 @@ func (t *Ble) SetPIO(pio BlePIOPin, value BlePIO) *BleResponse {
 	return t.writeRead(fmt.Sprintf(setPIO, pio, int(value)))
 }
 
+// GetPin func
+func (t *Ble) GetPin() *BleResponse {
+	return t.writeRead(getPin)
+}
+
+// SetPin func
+func (t *Ble) SetPin(pin int) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setPin, pin))
+}
+
+// FactoryReset func
+func (t *Ble) FactoryReset() *BleResponse {
+	return t.writeRead(factoryReset)
+}
+
+// Restart func
+func (t *Ble) Restart() *BleResponse {
+	return t.writeRead(restart)
+}
+
 // GetRole func
 func (t *Ble) GetRole() *BleResponse {
 	return t.writeRead(getRole)
@@ -198,19 +198,34 @@ func (t *Ble) SetRole(role BleRole) *BleResponse {
 	return t.writeRead(fmt.Sprintf(setRole, role))
 }
 
-// Reset func
-func (t *Ble) Reset() *BleResponse {
-	return t.writeRead(reset)
+// GetLastConnectedDeviceAddress func
+func (t *Ble) GetLastConnectedDeviceAddress() *BleResponse {
+	return t.writeRead(lastDeviceAddress)
 }
 
-// SofwareVersion func
-func (t *Ble) SofwareVersion() *BleResponse {
-	return t.writeRead(softwareVersion)
+// GetBondMode func
+func (t *Ble) GetBondMode() *BleResponse {
+	return t.writeRead(getBondMode)
 }
 
-// FactoryReset func
-func (t *Ble) FactoryReset() *BleResponse {
-	return t.writeRead(factoryReset)
+// SetBondMode func
+func (t *Ble) SetBondMode(mode BleBondMode) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setBondMode, int(mode)))
+}
+
+// GetDeviceUUID func
+func (t *Ble) GetDeviceUUID() *BleResponse {
+	return t.writeRead(getDeviceUUID)
+}
+
+// SetDeviceUUID func
+func (t *Ble) SetDeviceUUID(uuid string) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setDeviceUUID, uuid))
+}
+
+// GetSoftwareVersion func
+func (t *Ble) GetSoftwareVersion() *BleResponse {
+	return t.writeRead(getSoftwareVersion)
 }
 
 // hexTrick func
