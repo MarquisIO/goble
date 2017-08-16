@@ -31,7 +31,7 @@ const (
 
 	// Device Characteristic
 	getChar = "AT+CHAR?"
-	setChar = "AT+CHAR0x%s"
+	setChar = "AT+CHAR0x%s" // 1-65534
 
 	// Clear last connected device Address
 	clear = "AT+CLEAR"
@@ -42,19 +42,19 @@ const (
 
 	// iBeacon UUID
 	getUUID = "AT+IBE%d?"
-	setUUID = "AT+IBE%d%s"
+	setUUID = "AT+IBE%d%s" //1-4294967294
 
 	// iBeacon Major
 	getMajor = "AT+MARJ?"
-	setMajor = "AT+MARJ0x%s"
+	setMajor = "AT+MARJ0x%s" // 1-65534
 
 	// iBeacon Minor
 	getMinor = "AT+MINO?"
-	setMinor = "AT+MINO0x%s"
+	setMinor = "AT+MINO0x%s" // 1-65534
 
-	// iBeacon Measured power: Missing Now
-	// AT+MEAS?
-	// AT+MEAS%s
+	// iBeacon Measured power /!\ DANGER /!\
+	getIPower = "AT+MEA??"
+	//setIPower = "AT+MEA0x%s" //1-255
 
 	// Device Mode
 	getMode = "AT+MODE?"
@@ -64,9 +64,9 @@ const (
 	getDeviceName = "AT+NAME?"
 	setDeviceName = "AT+NAME%s"
 
-	// Parity bit: Missing Now
-	// AT+PARI?
-	// AT+PARI%d --> need const param
+	// Parity bit
+	getParity = "AT+PARI?"
+	setParity = "AT+PARI%d"
 
 	// PIO1 output status (System Led)
 	getStatus = "AT+PIO1?"
@@ -80,6 +80,10 @@ const (
 	getPin = "AT+PASS?"
 	setPin = "AT+PASS%d"
 
+	// Device power
+	getPower = "AT+POWE?"
+	setPower = "AT+POWE%d"
+
 	// Restore factory parameters
 	factoryReset = "AT+RENEW"
 
@@ -87,8 +91,8 @@ const (
 	restart = "AT+RESET"
 
 	// Device Role
-	setRole = "AT+ROLE%d"
 	getRole = "AT+ROLE?"
+	setRole = "AT+ROLE%d"
 
 	// Last connected device address
 	lastDeviceAddress = "AT+RADD?"
@@ -123,11 +127,17 @@ type BleUUID int
 // BleMode type
 type BleMode int
 
+// BleParity type
+type BleParity int
+
 // BlePIO type
 type BlePIO int
 
 // BlePIOPin type
 type BlePIOPin string
+
+// BlePower type
+type BlePower int
 
 // BleRole type
 type BleRole int
@@ -197,6 +207,13 @@ const (
 	Remote       BleMode = 2 // Remote control mode + mode 0
 )
 
+// Ble parity mode
+const (
+	None BleParity = 0
+	Even BleParity = 1
+	Odd  BleParity = 2
+)
+
 //Ble pin output
 const (
 	Low  BlePIO = 0
@@ -215,6 +232,14 @@ const (
 	Pin9 BlePIOPin = "9"
 	PinA BlePIOPin = "A"
 	PinB BlePIOPin = "B"
+)
+
+// Ble device power
+const (
+	P0 BlePower = 0 // -23 dbm
+	P1 BlePower = 1 // -6 dbm
+	P2 BlePower = 2 // 0 dbm (default)
+	P3 BlePower = 3 // 6 dbm
 )
 
 //Ble role

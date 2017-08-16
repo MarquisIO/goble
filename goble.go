@@ -79,8 +79,8 @@ func (t *Ble) GetCharacteristic() *BleResponse {
 }
 
 // SetCharacteristic func
-func (t *Ble) SetCharacteristic(char string) *BleResponse {
-	return t.writeRead(fmt.Sprintf(setChar, char))
+func (t *Ble) SetCharacteristic(char int64) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setChar, t.hexTrick(char, 4)))
 }
 
 // ClearLastConnectedDevice func
@@ -104,8 +104,8 @@ func (t *Ble) GetBeaconUUID(part BleUUID) *BleResponse {
 }
 
 // SetBeaconUUID func
-func (t *Ble) SetBeaconUUID(part BleUUID, uuid string) *BleResponse {
-	return t.writeRead(fmt.Sprintf(setUUID, part, uuid))
+func (t *Ble) SetBeaconUUID(part BleUUID, uuid int64) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setUUID, part, t.hexTrick(uuid, 8)))
 }
 
 // GetMajor func
@@ -115,7 +115,7 @@ func (t *Ble) GetMajor() *BleResponse {
 
 // SetMajor func
 func (t *Ble) SetMajor(major int64) *BleResponse {
-	return t.writeRead(fmt.Sprintf(setMajor, t.hexTrick(major)))
+	return t.writeRead(fmt.Sprintf(setMajor, t.hexTrick(major, 4)))
 }
 
 // GetMinor func
@@ -125,8 +125,18 @@ func (t *Ble) GetMinor() *BleResponse {
 
 // SetMinor func
 func (t *Ble) SetMinor(minor int64) *BleResponse {
-	return t.writeRead(fmt.Sprintf(setMinor, t.hexTrick(minor)))
+	return t.writeRead(fmt.Sprintf(setMinor, t.hexTrick(minor, 4)))
 }
+
+// GetIPower func
+func (t *Ble) GetIPower() *BleResponse {
+	return t.writeRead(getIPower)
+}
+
+// SetIPower func /!\ DANGER /!\
+//func (t *Ble) SetIPower(power int64) *BleResponse {
+//	return t.writeRead(fmt.Sprintf(setIPower, t.hexTrick(power, 2)))
+//}
 
 // GetMode func
 func (t *Ble) GetMode() *BleResponse {
@@ -146,6 +156,16 @@ func (t *Ble) GetDeviceName() *BleResponse {
 // SetDeviceName func
 func (t *Ble) SetDeviceName(name string) *BleResponse {
 	return t.writeRead(fmt.Sprintf(setDeviceName, name))
+}
+
+// GetParity func
+func (t *Ble) GetParity() *BleResponse {
+	return t.writeRead(getParity)
+}
+
+// SetParity func
+func (t *Ble) SetParity(parity BleParity) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setParity, parity))
 }
 
 // GetPIO1Status func
@@ -176,6 +196,16 @@ func (t *Ble) GetPin() *BleResponse {
 // SetPin func
 func (t *Ble) SetPin(pin int) *BleResponse {
 	return t.writeRead(fmt.Sprintf(setPin, pin))
+}
+
+// GetPower func
+func (t *Ble) GetPower() *BleResponse {
+	return t.writeRead(getPower)
+}
+
+// SetPower func
+func (t *Ble) SetPower(power BlePower) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setPower, power))
 }
 
 // FactoryReset func
@@ -219,8 +249,8 @@ func (t *Ble) GetDeviceUUID() *BleResponse {
 }
 
 // SetDeviceUUID func
-func (t *Ble) SetDeviceUUID(uuid string) *BleResponse {
-	return t.writeRead(fmt.Sprintf(setDeviceUUID, uuid))
+func (t *Ble) SetDeviceUUID(uuid int64) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setDeviceUUID, t.hexTrick(uuid, 4)))
 }
 
 // GetSoftwareVersion func
@@ -229,18 +259,42 @@ func (t *Ble) GetSoftwareVersion() *BleResponse {
 }
 
 // hexTrick func
-func (t *Ble) hexTrick(value int64) string {
-	if value < 1 {
-		value = 1
-		fmt.Println("Warning: Major/Minor value to low! (1-65534)")
-		fmt.Println("Value reset to: 1")
-	} else if value > 65534 {
-		fmt.Println("Warning: Major/Minor value to high! (1-65534)")
-		fmt.Println("Value reset to: 65534")
-		value = 65534
+func (t *Ble) hexTrick(value int64, hexLen int) string {
+	if hexLen == 2 {
+		if value < 1 {
+			value = 1
+			fmt.Println("Warning: Value to low! (1-255)")
+			fmt.Println("Value reset to: 1")
+		} else if value > 255 {
+			value = 255
+			fmt.Println("Warning: value to high! (1-255)")
+			fmt.Println("Value reset to: 255")
+		}
+	}
+	if hexLen == 4 {
+		if value < 1 {
+			value = 1
+			fmt.Println("Warning: Value to low! (1-65534)")
+			fmt.Println("Value reset to: 1")
+		} else if value > 65534 {
+			value = 65534
+			fmt.Println("Warning: value to high! (1-65534)")
+			fmt.Println("Value reset to: 65534")
+		}
+	}
+	if hexLen == 8 {
+		if value < 1 {
+			value = 1
+			fmt.Println("Warning: Value to low (1-4294967294)")
+			fmt.Println("Value reset to: 1")
+		} else if value > 4294967294 {
+			value = 4294967294
+			fmt.Println("Warning: value to high! (1-4294967294)")
+			fmt.Println("Value reset to: 4294967294")
+		}
 	}
 	hex := strings.ToUpper(strconv.FormatInt(value, 16))
-	for len(hex) < 4 {
+	for len(hex) < hexLen {
 		tmp := hex
 		hex = "0" + tmp
 	}
