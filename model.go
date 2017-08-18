@@ -36,6 +36,9 @@ const (
 	// Clear last connected device Address
 	clear = "AT+CLEAR"
 
+	// Set iBeacon deploy mode
+	setDeployMode = "AT+DELO%d"
+
 	// iBeacon Mode switch
 	getBeacon = "AT+IBEA?"
 	setBeacon = "AT+IBEA%d"
@@ -52,11 +55,11 @@ const (
 	getMinor = "AT+MINO?"
 	setMinor = "AT+MINO0x%s" // 1-65534
 
-	// iBeacon Measured power /!\ DANGER /!\
+	// iBeacon Measured power
 	getIPower = "AT+MEA??"
-	//setIPower = "AT+MEA0x%s" //1-255
+	setIPower = "AT+MEA0x%s" //1-255 /!\ DANGER /!\
 
-	// Device Mode
+	// Device Work Mode
 	getMode = "AT+MODE?"
 	setMode = "AT+MODE%d"
 
@@ -117,6 +120,9 @@ type BleAdvertisingType int
 
 // BleBaudRate type
 type BleBaudRate int
+
+// BleDeployMode type
+type BleDeployMode int
 
 // BleBeaconMode type
 type BleBeaconMode int
@@ -184,6 +190,12 @@ const (
 	B2400   BleBaudRate = 6
 	B1200   BleBaudRate = 7
 	B230400 BleBaudRate = 8
+)
+
+// Ble iBeacon Deploy Mode
+const (
+	BroadAndScan BleDeployMode = 1
+	BroadOnly    BleDeployMode = 2
 )
 
 //Ble beacon mode

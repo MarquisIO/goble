@@ -88,6 +88,11 @@ func (t *Ble) ClearLastConnectedDevice() *BleResponse {
 	return t.writeRead(clear)
 }
 
+//SetDeployMode func
+func (t *Ble) SetDeployMode(mode BleDeployMode) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setDeployMode, mode))
+}
+
 // GetBeaconMode func
 func (t *Ble) GetBeaconMode() *BleResponse {
 	return t.writeRead(getBeacon)
@@ -134,9 +139,9 @@ func (t *Ble) GetIPower() *BleResponse {
 }
 
 // SetIPower func /!\ DANGER /!\
-//func (t *Ble) SetIPower(power int64) *BleResponse {
-//	return t.writeRead(fmt.Sprintf(setIPower, t.hexTrick(power, 2)))
-//}
+func (t *Ble) SetIPower(power int64) *BleResponse {
+	return t.writeRead(fmt.Sprintf(setIPower, t.hexTrick(power, 2)))
+}
 
 // GetMode func
 func (t *Ble) GetMode() *BleResponse {
