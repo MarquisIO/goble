@@ -1,7 +1,7 @@
 # Bluetooth Low Energy for Go (based on CC2541)
 
 ### Description :
-Bluetooth Low Energy __(HM-10)__ module for Go
+A Go package to configure Bluetooth Low Energy devices (chip CC2541) through serial port
 
 ### Installation :
 
